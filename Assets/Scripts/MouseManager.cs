@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MouseManager : MonoBehaviour
 {
@@ -11,6 +11,8 @@ public class MouseManager : MonoBehaviour
     public Texture2D normalPointer;
     public Texture2D targetPointer;
     public Texture2D doorwayPointer;
+
+    public EventVector3 OnClickEnvironment;
 
     void Update()
     {
@@ -26,6 +28,11 @@ public class MouseManager : MonoBehaviour
             {
                 Cursor.SetCursor(targetPointer, new Vector2(16, 16), CursorMode.Auto);
             }
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                OnClickEnvironment.Invoke(raycastHit.point);
+            }
         }
         else
         {
@@ -33,3 +40,6 @@ public class MouseManager : MonoBehaviour
         }
     }
 }
+
+[Serializable]
+public class EventVector3 : UnityEvent<Vector3> { }
